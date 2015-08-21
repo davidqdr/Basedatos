@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8" />
-   <meta name="format-detection" content="telephone=no" />
-   <meta name="msapplication-tap-highlight" content="no" />
-   <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-	<title>My ToDo List</title>
-	<script type="text/javascript" src="cordova.js"></script>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/onsenui.css"/>
+    <link rel="stylesheet" href="css/onsen-css-components.css"/>
+    <script src="js/angular/angular.js"></script>
+    <script src="js/onsenui.js"></script>
+   	<script type="text/javascript" src="cordova.js"></script>
 	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
 
@@ -52,27 +52,47 @@
 		}
 		
 		// Run the onDeviceReady method
-		document.addEventListener("deviceready", onDeviceReady, false);
+		//document.addEventListener("deviceready", onDeviceReady, false);
 
-		function onDeviceReady(){
+		//function onDeviceReady(){
 		
-			$('#saveItem').click(function() {
-				insertItem();
-			});
-		
-			db = getDatabase();
-			db.transaction(function(tx) {
-				tx.executeSql('CREATE TABLE IF NOT EXISTS MYLIST (id INTEGER PRIMARY KEY AUTOINCREMENT, list_action)');
-			}, databaseError, getItems);
+
 			
-		}
+		//}
+		
+	ons.bootstrap();
+	ons.ready(function() {
+		$('#saveItem').click(function() {
+			insertItem();
+		});
+	
+		db = getDatabase();
+		db.transaction(function(tx) {
+			tx.executeSql('CREATE TABLE IF NOT EXISTS MYLIST (id INTEGER PRIMARY KEY AUTOINCREMENT, list_action)');
+		}, databaseError, getItems);
+	
+	
+		// Add another Onsen UI element
+		//var content = document.getElementById("my-content");
+		//content.innerHTML="<ons-button>Another Button</ons-button>";
+		ons.compile(content);
+	});
 	</script>
+  </head>
 </head>
 <body>
-	<h1>My ToDo List</h1>
-	<input type="text" name="list_action" />
-	<button id="saveItem">Grabar</button>
-	<div id="message"></div>
-	<div id="listItems"></div>
+	<ons-navigator title="Navigator" var="myNavigator">
+		<ons-page>
+			<ons-toolbar>
+			  <div class="center">Mis Tareas</div>
+			</ons-toolbar>
+			 <div style="text-align: left">
+				<input class="text-input" type="text" name="list_action" />
+				<ons-button id="saveItem">Grabar</ons-button>
+				<div id="message"></div>
+				<div id="listItems"></div>
+			</div>
+		</ons-page>
+	</ons-navigator>
 </body>
 </html>
